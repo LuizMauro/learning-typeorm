@@ -4,16 +4,11 @@ import CreateUserService from '../services/CreateUserService';
 const usersRouter = Router();
 
 usersRouter.get('/', async (request, response) => {
-  try {
     return response.send();
-  } catch (err) {
-    return response.status(400).json({ error: err.message });
-  }
-
 });
 
 usersRouter.post('/', async (request, response) => {
-  try {
+
     const { useName, useEmail, usePassword } = request.body;
 
     const createUser = new CreateUserService();
@@ -26,10 +21,6 @@ usersRouter.post('/', async (request, response) => {
 
 
     return response.json(user);
-
-  } catch (err) {
-    return response.status(400).json({ error: err.message });
-  }
 });
 
 

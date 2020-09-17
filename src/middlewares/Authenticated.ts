@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 
+import AppErros from '../errors/AppErros';
+
 import authConfig from '../config/auth';
 
 interface ITokenPayload{
@@ -17,7 +19,7 @@ export default function Authenticated(
     const authHeader = request.headers.authorization;
 
     if(!authHeader){
-      throw new Error('Token miss');
+      throw new AppErros('Token miss', 401);
     }
 
     const [, token] =  authHeader.split(' ');
@@ -34,7 +36,7 @@ export default function Authenticated(
       return next();
 
     } catch(err){
-      throw  new Error('Token invalid ')
+      throw  new AppErros('Token invalid', 401);
     }
 
 

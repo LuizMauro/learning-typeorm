@@ -14,19 +14,15 @@ appointmentRouter.use(authenticated);
 appointmentRouter.get('/', async (request, response) => {
   const appointmentsRpository = getCustomRepository(AppointmentsRepository);
 
-  try {
-    const appointments = await appointmentsRpository.find();
+  console.log("useID", request.user.useID);
 
-    return response.json(appointments);
+  const appointments = await appointmentsRpository.find();
 
-  } catch (err) {
-    return response.status(400).json({ error: err.message });
-  }
-
+  return response.json(appointments);
 });
 
 appointmentRouter.post('/', async (request, response) => {
-  try {
+
     const { provider_id, date } = request.body;
     const parsedDate = parseISO(date);
 
@@ -39,10 +35,6 @@ appointmentRouter.post('/', async (request, response) => {
 
     return response.json(appointment);
 
-
-  } catch (err) {
-    return response.status(400).json({ error: err.message });
-  }
 });
 
 export default appointmentRouter;

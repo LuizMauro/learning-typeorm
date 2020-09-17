@@ -3,6 +3,8 @@ import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken'
 import authConfig from '../config/auth';
 
+import AppError from '../errors/AppErros';
+
 import User from '../models/User';
 
 interface IRequest {
@@ -25,13 +27,13 @@ class AuthenticateUserService{
 
 
     if(!user){
-      throw new Error('Email não existe');
+      throw new AppError('Email não existe', 401);
     }
 
     const passwordMathced = await compare(password, user.usePasswordHash);
 
     if(!passwordMathced){
-      throw new Error('Email ou senha incorretos');
+      throw new AppError('Email ou senha incorretos', 401);
     }
 
     //Usuario tudo ok
